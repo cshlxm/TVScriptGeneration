@@ -395,7 +395,7 @@ tests.test_build_nn(build_nn)
 ]
 
 
-# In[15]:
+# In[14]:
 
 
 def get_batches(int_text, batch_size, seq_length):
@@ -446,11 +446,11 @@ tests.test_get_batches(get_batches)
 # - 将 `learning_rate` 设置为学习率。
 # - 将 `show_every_n_batches` 设置为神经网络应输出的程序组数量。
 
-# In[48]:
+# In[25]:
 
 
 # Number of Epochs
-num_epochs = 100
+num_epochs = 300
 # Batch Size
 batch_size = 128
 # RNN Size
@@ -460,7 +460,7 @@ embed_dim = 1000
 # Sequence Length
 seq_length = 20
 # Learning Rate
-learning_rate = 0.01
+learning_rate = 0.0025
 # Show stats for every n number of batches
 show_every_n_batches = 10
 
@@ -473,7 +473,7 @@ save_dir = './save'
 # ### 创建图表
 # 使用你实现的神经网络创建图表。
 
-# In[49]:
+# In[26]:
 
 
 """
@@ -510,7 +510,7 @@ with train_graph.as_default():
 # ## 训练
 # 在预处理数据中训练神经网络。如果你遇到困难，请查看这个[表格](https://discussions.udacity.com/)，看看是否有人遇到了和你一样的问题。
 
-# In[50]:
+# In[27]:
 
 
 """
@@ -549,7 +549,7 @@ with tf.Session(graph=train_graph) as sess:
 # ## 储存参数
 # 储存 `seq_length` 和 `save_dir` 来生成新的电视剧剧本。
 
-# In[52]:
+# In[28]:
 
 
 """
@@ -561,7 +561,7 @@ helper.save_params((seq_length, save_dir))
 
 # # 检查点
 
-# In[53]:
+# In[29]:
 
 
 """
@@ -587,7 +587,7 @@ seq_length, load_dir = helper.load_params()
 # 
 # 返回下列元组中的 tensor `(InputTensor, InitialStateTensor, FinalStateTensor, ProbsTensor)`
 
-# In[54]:
+# In[30]:
 
 
 def get_tensors(loaded_graph):
@@ -613,7 +613,7 @@ tests.test_get_tensors(get_tensors)
 # ### 选择词汇
 # 实现 `pick_word()` 函数来使用 `probabilities` 选择下一个词汇。
 
-# In[57]:
+# In[31]:
 
 
 def pick_word(probabilities, int_to_vocab):
@@ -625,15 +625,14 @@ def pick_word(probabilities, int_to_vocab):
     """
     #print(probabilities)
     # TODO: Implement Function
-    index = np.argmax(probabilities)
+    #index = np.random.choice(len(probabilities), 1, p=probabilities)  
     #print(int_to_vocab[index])
+    return np.random.choice(list(int_to_vocab.values()),1,p=probabilities)[0]
     
     
     
-    return int_to_vocab[index]
-
-
-
+    
+   
 
 """
 DON'T MODIFY ANYTHING IN THIS CELL THAT IS BELOW THIS LINE
@@ -644,7 +643,7 @@ tests.test_pick_word(pick_word)
 # ## 生成电视剧剧本
 # 这将为你生成一个电视剧剧本。通过设置 `gen_length` 来调整你想生成的剧本长度。
 
-# In[58]:
+# In[32]:
 
 
 gen_length = 800
